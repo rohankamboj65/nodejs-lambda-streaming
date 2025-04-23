@@ -7,6 +7,7 @@ provider:
   runtime: nodejs18.x
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-east-1'}
+  profile: runwayz
   memorySize: 256
   timeout: 30
   environment:
@@ -17,7 +18,7 @@ provider:
     CORS_ORIGINS: ${env:CORS_ORIGINS, '*'}
     RATE_LIMIT_WINDOW_MS: ${env:RATE_LIMIT_WINDOW_MS, '900000'}
     RATE_LIMIT_MAX: ${env:RATE_LIMIT_MAX, '100'}
-  
+
   # API Gateway configuration
   httpApi:
     cors: true
@@ -29,7 +30,6 @@ functions:
       - httpApi: '*'
 
 package:
-  individually: true
   patterns:
     - '!node_modules/.cache/**'
     - '!test/**'
@@ -38,6 +38,10 @@ package:
     - '!.github/**'
     - '!.vscode/**'
     - '!logs/**'
+    - 'node_modules/**'
+    - 'src/**'
+    - 'package.json'
+    - 'package-lock.json'
 
 plugins:
   - serverless-offline
